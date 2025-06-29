@@ -5,7 +5,7 @@ import './App.css'
 // Import components
 import LandingPage from './components/LandingPage'
 import LoginPage from './components/LoginPage'
-import RegisterPage from './components/RegisterPage'
+import RegisterPage from './components/RegisterPage.jsx'
 import Dashboard from './components/Dashboard'
 import PricingPage from './components/PricingPage'
 import AnalyticsPage from './components/AnalyticsPage'
