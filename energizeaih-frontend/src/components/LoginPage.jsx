@@ -31,27 +31,30 @@ export default function LoginPage() {
       const data = await response.json()
       
       if (response.ok) {
+        // Store user info if provided (e.g., in localStorage or context)
         if (data.user) {
           localStorage.setItem('user', JSON.stringify(data.user))
         }
         
+        // Redirect based on user role or to dashboard
         if (data.user && data.user.is_admin) {
           navigate('/admin')
         } else {
           navigate('/dashboard')
         }
       } else {
-        setMessage(data.error || 'Login failed')
+        setMessage(data.error || 'Login failed. Please try again.')
       }
     } catch (error) {
-      setMessage('Network error. Please try again.')
+      setMessage('Network error. Please check your connection and try again.')
     }
     
     setIsLoading(false)
   }
 
   const handleForgotPassword = () => {
-    setMessage('Password reset feature coming soon!')
+    // TODO: Implement forgot password functionality
+    setMessage('Forgot password feature coming soon!')
   }
 
   return (
@@ -59,7 +62,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Welcome Back</h1>
-          <p className="text-gray-600 mt-2">Sign in to your account</p>
+          <p className="text-gray-600 mt-2">Sign in to your EnergizeAIH account</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -90,8 +93,10 @@ export default function LoginPage() {
           </div>
 
           {message && (
-            <Alert>
-              <AlertDescription>{message}</AlertDescription>
+            <Alert className={message.includes('success') ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'}>
+              <AlertDescription className={message.includes('success') ? 'text-green-800' : 'text-red-800'}>
+                {message}
+              </AlertDescription>
             </Alert>
           )}
 
