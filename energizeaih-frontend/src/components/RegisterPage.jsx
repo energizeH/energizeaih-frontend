@@ -3,8 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { Alert, AlertDescription } from './ui/alert'
 import { Input } from './ui/input'
 import { Label } from './ui/label'
+import EyeIcon from './ui/EyeIcon' // Import the new EyeIcon
 
-export default function RegisterPage( ) {
+export default function RegisterPage() {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     email: '',
@@ -13,6 +14,7 @@ export default function RegisterPage( ) {
   })
   const [message, setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false) // New state for password visibility
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -76,30 +78,46 @@ export default function RegisterPage( ) {
             />
           </div>
 
-          <div>
+          {/* Password Input with Toggle */}
+          <div className="relative">
             <Label htmlFor="password">Password</Label>
             <Input
               id="password"
-              type="password"
+              type={showPassword ? 'text' : 'password'} // Dynamic type
               value={formData.password}
               onChange={(e) => setFormData({...formData, password: e.target.value})}
               required
-              className="mt-1"
+              className="mt-1 pr-10" {/* Added padding for icon */}
               placeholder="Create a password"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 top-6"
+            >
+              <EyeIcon className="h-5 w-5 text-gray-500" />
+            </button>
           </div>
 
-          <div>
+          {/* Confirm Password Input with Toggle */}
+          <div className="relative">
             <Label htmlFor="confirmPassword">Confirm Password</Label>
             <Input
               id="confirmPassword"
-              type="password"
+              type={showPassword ? 'text' : 'password'} // Dynamic type
               value={formData.confirmPassword}
               onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
               required
-              className="mt-1"
+              className="mt-1 pr-10" {/* Added padding for icon */}
               placeholder="Confirm your password"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 top-6"
+            >
+              <EyeIcon className="h-5 w-5 text-gray-500" />
+            </button>
           </div>
 
           {message && (
